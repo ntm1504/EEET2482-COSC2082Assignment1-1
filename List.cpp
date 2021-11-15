@@ -7,19 +7,19 @@ class Node {
     //property
     private:
         int x;
-        int y;
-        Node* next;
+        long y;
         friend class int2;
-    //constructor
     public:
-        Node(int xValue,int yValue){
+        Node* next;
+            //constructor
+        Node(int xValue,long yValue){
             this->x=xValue;
             this->y=yValue;
         }
     //deconstruct
         ~Node()
         {
-            clog<<"deconstructing node";
+            //clog<<"deconstructing node";
             if(this->next!=NULL)
             {
             delete this-> next;
@@ -34,6 +34,15 @@ class Node {
         {
             return y;
         }
+    //set
+        void SetX(int x)
+        {
+            this->x=x;
+        }
+        void SetY(long y)
+        {
+            this->y=y;
+        }
 };
 //PURPOSE
 //teacher dont allow list :V we create list :V
@@ -45,13 +54,16 @@ protected:
     int count;
 public:
     int2(){
-        
+
     }
     ~int2(){
         delete head;
     }
     //add to the nextLocation
-    void Add(int first, int second);
+    void Add(int first, long second);
+    //swap method
+    void SwapX(int fIndex,int sIndex);
+    void SwapY(int fIndex,int sIndex);
     //get total size to convert to array later
     int Size();
     //get the node at index
@@ -59,7 +71,7 @@ public:
     Node* GetNodeAt(int index);
 };
 //add a new node to with x and y to the list
-void int2::Add(int x, int y) {
+void int2::Add(int x, long y) {
     //increase size
     count++;
     //apply value to the next node
@@ -84,6 +96,23 @@ void int2::Add(int x, int y) {
     }
     return;
 
+}
+//swap method
+//swap X
+void int2::SwapX(int fIndex,int sIndex)
+{
+    int fValue=GetNodeAt(fIndex)->GetX();
+    int sValue=GetNodeAt(sIndex)->GetX();
+    GetNodeAt(fIndex)->SetX(sValue);
+    GetNodeAt(sIndex)->SetX(fValue);
+}
+//swap Y
+void int2::SwapY(int fIndex,int sIndex)
+{
+    int fValue=GetNodeAt(fIndex)->GetY();
+    int sValue=GetNodeAt(sIndex)->GetY();
+    GetNodeAt(fIndex)->SetY(sValue);
+    GetNodeAt(sIndex)->SetY(fValue);
 }
 //return the size of the list
 int int2::Size() {
