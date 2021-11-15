@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "string": "cpp",
+        "filesystem": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "ios": "cpp",
+        "istream": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.default.macFrameworkPath": []
+}
