@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+ 
+// Find mean
+float mean(float arr[], int n)
+{
+    float sum = 0;
+    for(int i = 0; i < n; i++)
+        sum = sum + arr[i];
+    return sum / n;
+}
+ 
+// Find covariance.
+float covariance(float arr1[], float arr2[], int n)
+{
+    float sum = 0;
+    for(int i = 0; i < n; i++)
+        sum = sum + (arr1[i] - mean(arr1, n)) *
+                    (arr2[i] - mean(arr2, n));
+    return sum / (n - 1);
+}
+ 
+int main()
+{
+    float arr1[] = {68, 98, 50, 12, 34};
+    int n = sizeof(arr1) / sizeof(arr1[0]);
+     
+    float arr2[] = {12, 34, 67, 54, 13};
+    int m = sizeof(arr2) / sizeof(arr2[0]);
+     
+    if (m == n)
+        cout << covariance(arr1, arr2, m);
+    return 0;
+}
