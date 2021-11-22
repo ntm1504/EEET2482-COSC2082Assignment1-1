@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+// Find median
+int median(int* arr, int l, int r)
+{
+	int n;
+	if (r % 2 == 1) {
+		n = (r + 1) / 2;
+	}
+	else {
+		n = ((r / 2) + (r / 2) + 1) / 2;
+	}
+	return arr[n - 1];
+}
+
+//Sorting array
+void sortarray(int* arr, int r)
+{
+	int i, j, temp;
+	for (i = 0; i < r; i++)
+	{
+		for (j = i + 1; j < r; j++)
+		{
+			if (arr[i] > arr[j])
+			{
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+		}
+	}
+	return;
+}
+// Driver Code
+int main()
+{
+	int i, j, temp;
+	int arr[] = { 10, 10, 1, 9, 9, 100, 0, 22, 12, 65, 44 ,85 };
+	int m = sizeof(arr) / sizeof(arr[0]);
+	sortarray(arr, m);
+
+	int mid_index = median(arr, 0, m);
+	cout << "Median = " << mid_index << endl;
+	return 0;
+}
