@@ -7,11 +7,12 @@ int median(int* arr, int l, int r)
 	int n;
 	if (r % 2 == 1) {
 		n = (r + 1) / 2;
+		return arr[n - 1];
 	}
 	else {
 		n = ((r / 2) + (r / 2) + 1) / 2;
+		return (arr[n - 1]+arr[n])/2;
 	}
-	return arr[n - 1];
 }
 
 //Sorting array
