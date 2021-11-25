@@ -81,6 +81,25 @@ void Display(double *arr, int size)
     }
     cout << endl;
 }
+// Find median Index
+int MedianIndex(double* a, int low, int size)
+{
+    int excludeAmount=1;
+    int n = size - low-excludeAmount;//amount of numbers exclude the low
+    if(low==0)
+    {
+        excludeAmount=0;
+        n=size;//no exclude when low is 0
+    }
+	if(n%2==1)//odd amount
+    {
+        return n/2+low+excludeAmount;//add back offset
+    }
+    else{   //even amount
+        //return the lower index of the 2 median
+        return (n/2-1)+low+excludeAmount;//add back offset
+    }
+}
 //get sum of a list
 double GetSum(double *arr, int size)
 {
@@ -270,6 +289,24 @@ double MeanAbsoluteDeviation(double *arr, int size)
     return result;
 }
 //5 Quartile3
+double quartile3(double* arr, int size)
+{
+	// Median of total data
+	int med = MedianIndex(arr, 0, size);
+    //cout<<"midIndex: "<<med<<endl;
+	double Q3;
+	// Median of second half
+    //check if the exclusive ammount of number is odd or even
+	if ((size - med-1) % 2 == 1) {//odd amount
+	    Q3 = arr[MedianIndex(arr, med,size)];
+	}
+	else {//even amount
+        int q3Index=MedianIndex(arr, med, size);//location of the lower mmedian of the two mmedian;
+	    Q3 = (arr[q3Index] + arr[q3Index + 1]) / 2;//since MedianIndex return the lower index of the two median must add 1 to compute the average
+	}
+	return Q3;
+}
+
 //6 Skewness
 double Skewness(double *arr, int size, double sde)
 {
@@ -352,9 +389,9 @@ int main()
 {
     string fileName = "data1.csv";
     //Get values from reader
-    //int2 valueList = ReadCSVFile(fileName);
+    int2 valueList = ReadCSVFile(fileName);
     //while Testing use GetATestingList to check for the result
-    int2 valueList=GetATestingList();
+    //int2 valueList=GetATestingList();
     //convert list to 2 array
     double *xArray = new double[valueList.Size()];
     double *yArray = new double[valueList.Size()];
@@ -366,15 +403,15 @@ int main()
         yArray[i] = valueList.GetNodeAt(i)->GetY();
     }
     int arraySize = valueList.Size();
-    Display(xArray,arraySize);
-    Display(yArray,arraySize);
+    //Display(xArray,arraySize);
+    //Display(yArray,arraySize);
     //sorting
     cout << "Sorting Start! Please Wait" << endl;
     quickSort(xArray, 0, arraySize - 1,arraySize);
     quickSort(yArray, 0, arraySize - 1,arraySize);
     cout << "Sorting Completed successfully" << endl;
-    Display(xArray,arraySize);
-    Display(yArray,arraySize);
+    //Display(xArray,arraySize);
+    //Display(yArray,arraySize);
     //Display(valueList);
     cout << "--------------------------------------------" << endl;
     cout << "Start display the result:" << endl;
@@ -418,7 +455,7 @@ int main()
     //5-Third quartile-------------------------------------------
     cout << "5-Thrid Quartile" << endl;
     //display
-    //cout<<"var_x= "<<MeanAbsoluteDeviation(valueList,true)<< " - "<<"var_y= "<<MeanAbsoluteDeviation(valueList,false)<<endl;
+    cout<<"Q3_x= "<<quartile3(xArray,arraySize)<< " - "<<"Q3_y= "<<quartile3(yArray,arraySize)<<endl;
     //conclusion
     cout << "--" << endl;
     //6-Skewness------------------------------------------------

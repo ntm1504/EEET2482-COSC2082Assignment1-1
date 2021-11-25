@@ -1,47 +1,44 @@
 #include <iostream>
 using namespace std;
 // Find median
-int median2(double* a, int l, int r)
+int MedianIndex(double* a, int low, int size)
 {
-	int n = r - l + 1;
-	n = (n + 1) / 2 - 1;
-	if (n % 2 == 1) {
-		n = n + l - 1;
-	}
-	else {
-		n = n + l;
-	}
-	return n;
+    int excludeAmount=1;
+    int n = size - low-excludeAmount;//amount of numbers exclude the low
+    if(low==0)
+    {
+        excludeAmount=0;
+        n=size;//no exclude when low is 0
+    }
+	if(n%2==1)//odd amount
+    {
+        return n/2+low+excludeAmount;//add back offset
+    }
+    else{   //even amount
+        //return the lower index of the 2 median
+        return (n/2-1)+low+excludeAmount;//add back offset
+    }
 }
 
 // Function to calculate Q3
-double quartile3(double* arr, int r)
+double quartile3(double* arr, int size)
 {
 	// Median of total data
-	int mid_index = median2(arr, 0, r);
+	int med = MedianIndex(arr, 0, size);
+    cout<<"midIndex: "<<med<<endl;
 	double Q3;
 	// Median of second half
-	if ((r - mid_index +1 ) % 2 == 1) {
-	Q3 = arr[median2(arr, mid_index + 1, r)];
+    //check if the exclusive ammount of number is odd or even
+	if ((size - med-1) % 2 == 1) {//odd amount
+	    Q3 = arr[MedianIndex(arr, med,size)];
 	}
-	else {
-	Q3 = (arr[median2(arr, mid_index + 1, r)] + arr[median2(arr, mid_index + 1, r) + 1]) / 2;
+	else {//even amount
+        int q3Index=MedianIndex(arr, med, size);//location of the lower mmedian of the two mmedian;
+	    Q3 = (arr[q3Index] + arr[q3Index + 1]) / 2;//since MedianIndex return the lower index of the two median must add 1 to compute the average
 	}
 	return Q3;
 }
 
-double qq(double* arr, int size)
-{
-    if(size%4==1)
-    {
-        int tIndex=(size-1)*3/4;
-        return arr[tIndex];
-    }
-    else{
-        return 0;
-    }
-
-}
 //Sorting array
 void sortarray(double* arr, int r)
 {
@@ -63,12 +60,11 @@ void sortarray(double* arr, int r)
 // Driver Code
 int main()
 {
-	// int i, j, temp;
-	// double arr[] = { 10, 19, 1, 3, 9, 100, 0, 22, 12, 65, 44 };
-	// int m = sizeof(arr) / sizeof(arr[0]);
-	// sortarray(arr, m);
-	// cout << "Third Quartile = " << quartile3(arr, m) << endl;
-    int testingNumber=6*3/4;
-    cout<<testingNumber;
+	int i, j, temp;
+	double arr[] = { 1,2,3,4,5,6,7,8 };
+	int m = sizeof(arr) / sizeof(arr[0]);
+	sortarray(arr, m);
+
+	cout << "Third Quartile = " << quartile3(arr, m) << endl;
 	return 0;
 }
