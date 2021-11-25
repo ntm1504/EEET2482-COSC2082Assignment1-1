@@ -101,6 +101,7 @@ void int2::Add(int x, long y) {
 //swap X
 void int2::SwapX(int fIndex,int sIndex)
 {
+    //cout<<"swap happens between:"<<fIndex<<" and "<<sIndex<<endl;
     int fValue=GetNodeAt(fIndex)->GetX();
     int sValue=GetNodeAt(sIndex)->GetX();
     GetNodeAt(fIndex)->SetX(sValue);
@@ -131,7 +132,7 @@ Node* int2::GetNodeAt(int index)
         return tail;
     } else if( index>=count)//check if index node exist
     {
-        cerr<<"index are out of list length!:"<<index<<" / "<<count;
+        cerr<<"index are out of list length!:"<<index<<" / "<<count<<endl;
         return NULL;
     }
     else{
